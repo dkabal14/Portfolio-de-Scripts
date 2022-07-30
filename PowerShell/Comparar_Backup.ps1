@@ -1,6 +1,6 @@
-﻿#Script escrito por Diego Rosário Sousa - Suporte Nível 3 - RJ
-#diegos.sonda@contratada.oi.net.br
-#Sonda IT do Brasil SA
+﻿#Script escrito por Diego Rosário Sousa
+#diegorosariosousa@gmail.com
+#Script com interface gráfica, escrito para comparar os arquivos entre duas pastas e mostrar as diferenças entre elas.
 Add-Type -AssemblyName System.Windows.Forms
 
 $form1 = New-Object System.Windows.Forms.Form
