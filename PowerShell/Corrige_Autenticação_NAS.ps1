@@ -1,6 +1,5 @@
 ﻿#Script desenvolvido por Diego Rosário Sousa
-#diegos.sonda@contratada.oi.net.br
-#Suporte Nível 3 - Sonda IT do Brasil
+#diegorosariosousa@gmail.com
 
 #Corrige erro de conta no acesso a diretórios de rede
 
