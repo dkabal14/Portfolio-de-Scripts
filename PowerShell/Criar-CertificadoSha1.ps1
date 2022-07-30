@@ -1,5 +1,6 @@
 $email = read-host("Digite o e-mail que codificará o certificado")
-{[Version]
+{
+    [Version]
     Signature = "$Windows NT$"
     
     [Strings]
@@ -20,4 +21,4 @@ $email = read-host("Digite o e-mail que codificará o certificado")
     
     [Extensions]
     %szOID_ENHANCED_KEY_USAGE% = "{text}%szOID_DOCUMENT_ENCRYPTION%"
-    } | Out-File -FilePath d:\DocumentEncryption.inf
+} | Out-File -FilePath d:\DocumentEncryption.inf
