@@ -1,5 +1,8 @@
-#Script created by Diego Sousa
-#Esse script possui duas funções, a primeira (Get-Session) faz um scrapping do comando Query Session e coloca o resultaod em um objeto, facilitando o kick nos usuários logados em máquinas locais e/ou remotas, a segunda, executa o logoff em um perfil escolhido.
+<#
+Script created by Diego Sousa
+Esse script possui duas funções, a primeira (Get-Session) faz um scrapping do comando Query Session e coloca o resultaod em um objeto, 
+facilitando o kick nos usuários logados em máquinas locais e/ou remotas, a segunda, executa o logoff em um perfil escolhido.
+#>
 
 function Get-Session 
 {
