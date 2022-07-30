@@ -1,5 +1,5 @@
 #Script escrito por Diego Rosário Sousa
-#Cria notificações no Windows 10
+#Referência para criar notificações no Windows 10
 Add-Type -AssemblyName System.Windows.Forms
 
 
