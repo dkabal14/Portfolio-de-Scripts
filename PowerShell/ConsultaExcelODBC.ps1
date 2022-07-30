@@ -1,4 +1,10 @@
-﻿$arquivo = "D:\odbc.xlsx"
+<#
+  Script escrito por Diego Rosário Sousa - diegorosariosousa@gmail.com
+  Faz uma consulta de um arquivo de excel como se esse fosse uma database conectada ao ODBC
+  Veja a referência e pré-requisito em: https://web.synametrics.com/queryexcel.htm
+#>
+
+$arquivo = "D:\odbc.xlsx"
 $Tabela = "Plan1"
 $conexão = New-Object System.Data.OleDb.OleDbConnection
 $stringDeConexão = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=$arquivo;Extended Properties='Excel 12.0 Xml;HDR=YES;'"
