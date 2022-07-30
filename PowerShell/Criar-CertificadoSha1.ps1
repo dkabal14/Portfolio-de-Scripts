@@ -1,4 +1,5 @@
-﻿{[Version]
+$email = read-host("Digite o e-mail que codificará o certificado")
+{[Version]
     Signature = "$Windows NT$"
     
     [Strings]
@@ -6,7 +7,7 @@
     szOID_DOCUMENT_ENCRYPTION = "1.3.6.1.4.1.311.80.1"
     
     [NewRequest]
-    Subject = "cn=diegos.sonda@contratada.oi.net.br"
+    Subject = "cn=$($email)"
     MachineKeySet = false
     KeyLength = 2048
     KeySpec = AT_KEYEXCHANGE
