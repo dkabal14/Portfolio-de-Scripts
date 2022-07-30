@@ -1,3 +1,5 @@
+#Script escrito por Diego Rosário Sousa - diegorosariosousa@gmail.com
+#Faz a extração de usuários ativos no Active Directory
 $nomeDestino = "ExtracaoAD_" + (Get-Date -Format dd-MM-yyyy)
 $pastaDestino = "$env:USERPROFILE\Documents\"
 $extensaoArquivo = ".csv"
