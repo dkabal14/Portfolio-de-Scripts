@@ -1,0 +1,2 @@
+﻿# Instala Driver
+Get-ChildItem
