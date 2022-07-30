@@ -1,4 +1,4 @@
-SET _proxy="http://proxy.telemar:8350/web.pac"
+SET _proxy="seu proxy"
 
 REG DELETE "HKEY_CURRENT_USER\Software\Policies\Microsoft\Internet Explorer\Control Panel" /v "AutoConfig" /f
 REG DELETE "HKEY_CURRENT_USER\Software\Policies\Microsoft\Internet Explorer\Control Panel" /v "Proxy" /f
