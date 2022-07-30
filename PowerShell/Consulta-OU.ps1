@@ -1,4 +1,6 @@
-﻿$sair = "nao"
+#O script mostra em qual Unidade Organizacional o objeto do equipamento se encontra no Active Directory
+#sem a necessidade de instalação do RSAT.
+$sair = "nao"
 Do
 {
     $computador = Read-Host -Prompt "Digite o nome do computador"
