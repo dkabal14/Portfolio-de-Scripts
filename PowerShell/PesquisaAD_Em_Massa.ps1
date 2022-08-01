@@ -1,5 +1,5 @@
 ﻿#Script escrito por Diego Rosário Sousa - Suporte Nível 3 RJ
-#diegos.sonda@contratada.oi.net.br
+#diegorosariosousa@gmail.com
 
 $Credenciais = Get-Credential
 $Computers = Get-Content -Path $PSScriptRoot\MoveAD_Em_Massa_Lista.txt
