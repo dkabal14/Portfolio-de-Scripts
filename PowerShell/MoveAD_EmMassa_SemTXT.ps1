@@ -1,5 +1,5 @@
 <#Script desenvolvido por Diego Ros�rio Sousa - Sonda - Suporte N�vel 3 - RJ
-diegos.sonda@contratada.oi.net.br
+diegorosariosousa@gmail.com
 
 
 OU de Destino deve estar entre aspas
