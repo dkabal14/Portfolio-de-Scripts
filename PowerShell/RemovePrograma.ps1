@@ -1,11 +1,11 @@
-#Script criado por Diego por Diego Ros·rio Sousa - Suporte NÌvel 3 - RJa
-#diegos.sonda@contratada.oi.net.br
-#Mostra uma lista dos softwares instalados e te permite removÍ-lo (para executar com perfil de adminsitrador em m·quinas com usu·rios sem priv logados)
+#Script criado por Diego por Diego Ros√°rio Sousa - Suporte N√≠vel 3 - RJa
+#diegorosariosousa@gmail.com
+#Mostra uma lista dos softwares instalados e te permite remov√™-lo (para executar com perfil de adminsitrador em m√°quinas com usu√°rios sem priv logados)
 
 $softwares = Get-ChildItem -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall
 $softNames = $softwares | Get-ItemProperty | Select-Object -Property DisplayName | foreach {$_.DisplayName}
 
-Function Show-Menu #Usu·rio FischFreund em https://www.reddit.com/r/PowerShell/comments/8afs51/create_dynamic_menu_from_array/
+Function Show-Menu #Usu√°rio FischFreund em https://www.reddit.com/r/PowerShell/comments/8afs51/create_dynamic_menu_from_array/
 {
 
     Param(
@@ -16,7 +16,7 @@ Function Show-Menu #Usu·rio FischFreund em https://www.reddit.com/r/PowerShell/c
 
     do { 
     
-        Write-Host "Selecione o software para remoÁ„o:"
+        Write-Host "Selecione o software para remo√ß√£o:"
 
         $index = 1
         foreach ($location in $softNames) {
