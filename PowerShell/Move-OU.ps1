@@ -1,9 +1,10 @@
-﻿import-module ActiveDirectory
+#Esse script utiliza um arquivo do excel com destinos e padrões de hostnames para mover uma lista de máquinas para uma diversidade de OU's.
+import-module ActiveDirectory #É necessário possuir o RSAT instalado para a consulta do Active Directory, recomendo instalar da imagem Features On Demand da microsof.
 #==============================================================================================
 
 function Exibir-Creditos
 {
-    Write-Host "Escrito por Diego R. (diegos.sonda@contratada.oi.net.br) `nSuporte nível 3 RJ - Sonda IT" -ForegroundColor Cyan 
+    Write-Host "Escrito por Diego R. (diegorosariosousa@gmail.com)" -ForegroundColor Cyan 
 }
 
 function Gera-Csv
@@ -43,7 +44,7 @@ function Gera-Csv
     return $result
 }
 
-function Objeto-mySQL
+function Objeto-mySQL #Para o caso de haver um banco de dados SQL com as informações ao invés da família.
 {
     $SQLServer = "servidor"
     $SQLDBName = "database"
@@ -66,7 +67,7 @@ function Objeto-mySQL
 function Main-Void
 {
     Exibir-Creditos
-    $OURoot = 'CN=Computers,DC=oi,DC=corp,DC=net'
+    $OURoot = 'CN=Computers,DC=empresa,DC=corp,DC=net'
     #$colComputadores = Get-ADComputer -Filter 'operatingsystem -like "*Windows*" -and operatingsystem -notlike "*Server*"' -SearchBase $OURoot | Select-Object -Property *
     $colComputadores = import-csv -path "D:\removepriv.csv"
     $tabOU = Gera-Csv
@@ -107,10 +108,10 @@ function Main-Void
 
         #================================================================
         
-        if ($objDestino -eq "Inexistente" -or $objDestino -eq $null) #Se o destino não existir na planilha (ou banco de dados), coloca o equipamento em Regional RJ
+        if ($objDestino -eq "Inexistente" -or $objDestino -eq $null) #Se o destino não existir na planilha (ou banco de dados), coloca o equipamento em Sudeste
         
         {
-            $objDestino = "OU=Regional RJ,OU=Estacoes,DC=oi,DC=corp,DC=net" # caminho para as exceções
+            $objDestino = "OU=Sudeste,OU=Estacoes,DC=empresa,DC=corp,DC=net" # caminho para as exceções
         }
 
         
