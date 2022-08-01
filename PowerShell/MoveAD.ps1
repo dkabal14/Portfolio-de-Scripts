@@ -1,9 +1,9 @@
-﻿
-
+#Move equipamentos de acordo com um padrão de hostnames
+$servidor = ""
 Function Move-Maquina
 {
     param ([string]$Máquina)
-    $objeto = Get-ADComputer -Filter {Name -eq $Maquina} -Properties * -Server oi.corp.net -SearchScope Subtree -SearchBase 'OU=Estacoes,DC=oi,DC=corp,DC=net' | Select-Object -Property Name
+    $objeto = Get-ADComputer -Filter {Name -eq $Maquina} -Properties * -Server $servidor -SearchScope Subtree -SearchBase 'OU=Estacoes,DC=empresa,DC=corp,DC=net' | Select-Object -Property Name
     $strFiltro = "(&(objectClass=Computer)(objectCategory=Computer)(cn=$Maquina))"
     $objDominio = New-Object System.DirectoryServices.DirectoryEntry
     $objPesquisador = New-Object System.DirectoryServices.DirectorySearcher
@@ -11,7 +11,7 @@ Function Move-Maquina
     $objPesquisador.SearchScope = 'Subtree'
     $objPesquisador.SearchRoot = $objDominio
     $ObjetoAD = $objPesquisador.FindOne().Properties.distinguishedname
-    $objAlvo = "OU=,OU=Estacoes,DC=oi,DC=corp,DC=net"
+    $objAlvo = "OU=Sudeste,OU=Estacoes,DC=empresa,DC=corp,DC=net"
     Move-ADObject -Identity "$ObjetoAD" -TargetPath $objAlvo
     Write-Host " Objeto $Computer" -ForegroundColor Cyan
     Write-Host "     OU Anterior: $ObjetoAD `n     OU Atual:    $objAlvo`n" -ForegroundColor Green
