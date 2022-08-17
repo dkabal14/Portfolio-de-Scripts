@@ -64,12 +64,11 @@ function Objeto-mySQL #Para o caso de haver um banco de dados SQL com as informa
     Return $DataSet.Tables[0]
 }
 
-function Main-Void
+function Main-Void #Só serão movidos equipamentos dentro da OU Computers e cujo SO seja Windows, exceto Windows server
 {
     Exibir-Creditos
     $OURoot = 'CN=Computers,DC=empresa,DC=corp,DC=net'
-    #$colComputadores = Get-ADComputer -Filter 'operatingsystem -like "*Windows*" -and operatingsystem -notlike "*Server*"' -SearchBase $OURoot | Select-Object -Property *
-    $colComputadores = import-csv -path "D:\removepriv.csv"
+    $colComputadores = Get-ADComputer -Filter 'operatingsystem -like "*Windows*" -and operatingsystem -notlike "*Server*"' -SearchBase $OURoot | Select-Object -Property *
     $tabOU = Gera-Csv
     #$Autenticacao = Get-Credential
     foreach ($objComputador in $colComputadores)
