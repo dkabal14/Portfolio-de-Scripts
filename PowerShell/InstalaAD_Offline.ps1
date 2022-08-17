@@ -1,6 +1,6 @@
 #Ativar o Active Directory 20H2
 <#
-    CASO A CONEXÃO NÃO PEGUE O NOME DOSA RQUIVOS ONLINE
+    CASO A CONEXÃO NÃO PEGUE O NOME DOS ARQUIVOS ONLINE
     $rsatNames = @()
     $rsatNames += "Rsat.ActiveDirectory.DS-LDS.Tools~~~~0.0.1.0"
     $rsatNames += "Rsat.BitLocker.Recovery.Tools~~~~0.0.1.0"
