@@ -43,5 +43,5 @@ function Criar-CertificadoSha1 {
     $infInput | Out-File -FilePath $infOutput
     
     certreq -new $infOutput $cerOutput
-}
+} 
 Criar-CertificadoSha1 -cerOutput "c:\CertificadoSHA1.cer" -email "diegorosariosousa@gmail.com" -ValidityPeriod "Years" -ValidityPeriodUnity "10"
