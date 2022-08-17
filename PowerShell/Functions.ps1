@@ -345,7 +345,7 @@ function Popup {
         }
     }
 }
-unction Criar-CertificadoSha1 {
+function Criar-CertificadoSha1 {
     [CmdletBinding()]
     param (
         [Parameter(mandatory=$false)]
