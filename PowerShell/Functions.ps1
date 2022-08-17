@@ -389,4 +389,4 @@ function Criar-CertificadoSha1 {
     $infInput | Out-File -FilePath $infOutput #cria o inf
     
     certreq -new $infOutput $cerOutput #cria o certificado atraés do inf
-} 
+}
