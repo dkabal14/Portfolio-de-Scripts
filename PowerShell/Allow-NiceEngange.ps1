@@ -1,9 +1,9 @@
-function InstallNetFrameWork
+function InstallNetFrameWork #Instala o .NetFramework cujo instalador está na pasta do script
 {
     Start-Process -FilePath "$($PSScriptRoot)\NDP47-KB3186497-x86-x64-AllOS-ENU.exe" -ArgumentList "/passive","/norestart" -Wait
 }
 
-function AllowNiceEngage
+function AllowNiceEngage #Cria as regras de entrada que permitem a comunicação do Nice Engage
 {
     $lista = @("TCP,443","TCP,2010","UDP,5060","UDP,5062","UDP,5063","TCP,62070","TCP,62122","TCP,62124","TCP,62130","UDP,38210-38220","UDP,62125")
 
@@ -20,7 +20,7 @@ function AllowNiceEngage
     }
 }
 
-function InstallNiceEngage 
+function InstallNiceEngage #Inicia a instalação do Nice Engage
 {
     Write-Host "Instalando o Nice Engage" -ForegroundColor Yellow
     $OS = Get-CimInstance -ClassName Win32_OperatingSystem
@@ -34,7 +34,7 @@ function InstallNiceEngage
     }
 }
 
-function InstallVisualC
+function InstallVisualC #Instala o Visual C++ que está na pasta do software
 {
     Start-Process -FilePath "$PSScriptRoot\Visual2017(x86).exe" -ArgumentList "/passive","/norestart" -Wait
 }
