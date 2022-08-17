@@ -271,3 +271,77 @@ function Remove-SCCMCache #Baseado no artigo encontrado em https://enterinit.com
         Write-Host "=====================================" -ForegroundColor Green
     }
 }
+function Popup {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory=$true)]
+        [string]
+        $Mensagem,
+
+        [Parameter(Mandatory=$false)]
+        [int32]
+        $tempo = 0,
+
+        [Parameter(Mandatory=$false)]
+        [validateset("OK","OKCancelar","AnularRepetirIgnorar","SimNaoCancelar","SimNao","RepetirCancelar")]
+        $Botao = "OK",
+
+        [Parameter(Mandatory=$false)]
+        [string]
+        $titulo = "Sem título",
+
+        [Parameter(Mandatory=$false)]
+        [string]
+        [validateset("Erro","Questionamento","Aviso","Informacao")]
+        $Icone = "Informacao"
+    )
+    $WShell = New-Object -ComObject Wscript.Shell
+    switch ($Botao) 
+    {
+        
+        "OK"
+        {
+            $buttChoice = 0
+        }
+        "OKCancelar"
+        {
+            $buttChoice = 1
+        }
+        "AnularRepetirIgnorar"
+        {
+            $buttChoice = 2
+        }
+        "SimNaoCancelar"
+        {
+            $buttChoice = 3
+        }
+        "SimNao"
+        {
+            $buttChoice = 4
+        }
+        "RepetirCancelar"
+        {
+            $buttChoice = 5
+        }
+    }
+
+    switch ($Icone)
+    {
+        "Erro"
+        {
+            $IconChoice = 16
+        }
+        "Questionamento"
+        {
+            $IconChoice = 32
+        }
+        "Aviso"
+        {
+            $IconChoice = 48
+        }
+        "Informacao"
+        {
+            $IconChoice = 64
+        }
+    }
+}

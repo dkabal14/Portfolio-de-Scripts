@@ -1,4 +1,4 @@
-#Script escrito por diegorosariosousa@gmail.com
+#Script escrito por Diego R. Sousa - diegorosariosousa@gmail.com
 #Script feito para trocar o nome do usuário Administrador built-in (criado com a instalação do Windows) para Supervisor
 #Esse script troca qualquer usuário com o nome "supervisor" para Administrador no lugar dele, e caso esse não exista, ele o cria como um Administrador "fake"
 
