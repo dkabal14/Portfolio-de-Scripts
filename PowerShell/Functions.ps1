@@ -271,6 +271,7 @@ function Remove-SCCMCache #Baseado no artigo encontrado em https://enterinit.com
         Write-Host "=====================================" -ForegroundColor Green
     }
 }
+
 function Popup {
     [CmdletBinding()]
     param (
