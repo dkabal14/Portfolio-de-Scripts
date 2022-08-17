@@ -8,7 +8,7 @@ $arquivoDestino =  $pastaDestino + $nomeDestino + $extensaoArquivo
 function Popup {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory=$true)]
         [string]
         $Mensagem,
 

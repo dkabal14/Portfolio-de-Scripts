@@ -386,7 +386,7 @@ function Criar-CertificadoSha1 {
     [Extensions]
     %szOID_ENHANCED_KEY_USAGE% = "{text}%szOID_DOCUMENT_ENCRYPTION%"'
 
-    $infInput | Out-File -FilePath $infOutput
+    $infInput | Out-File -FilePath $infOutput #cria o inf
     
-    certreq -new $infOutput $cerOutput
+    certreq -new $infOutput $cerOutput #cria o certificado atraés do inf
 } 
