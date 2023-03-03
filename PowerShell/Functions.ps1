@@ -419,3 +419,44 @@ function randomWords()
     }
     return $Texto
 }
+
+function With-Index {
+    <#
+        .SYNOPSIS
+            This function will add an index column to an object using computed properties
+        .DESCRIPTION
+            This function will add an index column to an object using computed properties
+        .PARAMETER Collection
+            This parameter sets the target object
+        .EXAMPLE
+            PS C:\Users\Admin> $t
+
+            column2 column3 column1
+            ------- ------- -------
+            b1      c1      a1
+            b2      c2      a2
+
+            PS C:\Users\Admin> $plusIndex = With-Index -Collection $t
+            PS C:\Users\Admin> $plusIndex
+
+            index column2 column3 column1
+            ----- ------- ------- -------
+                0 b1      c1      a1
+                1 b2      c2      a2
+        .NOTES
+            dkabal14
+            diegorosariosousa@gmail.com
+            https://github.com/dkabal14
+    #>
+    param (
+        [Parameter()]
+        [psobject]
+        $Collection
+    )
+    $result = @()
+    foreach ($item in $Collection)
+    {
+        $result += $item | Select-Object -Property @{Name = "index"; Expression = {$Collection.IndexOf($item)}}, *
+    }
+    $result
+}
