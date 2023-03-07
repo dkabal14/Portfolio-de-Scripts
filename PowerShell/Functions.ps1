@@ -421,46 +421,46 @@ function randomWords()
 }
 
 function With-Index {
-    <#
-        .SYNOPSIS
-            This function will add an index column to an object using computed properties
-        .DESCRIPTION
-            This function will add an index column to an object using computed properties
-        .PARAMETER Collection
-            This parameter sets the target object
-        .EXAMPLE
-            ******** With an Object *********
-            PS C:\Users\Admin> $t
 
-            column2 column3 column1
-            ------- ------- -------
-            b1      c1      a1
-            b2      c2      a2
+    # .SYNOPSIS
+    #     This function will add an index column to an object using computed properties
+    # .DESCRIPTION
+    #     This function will add an index column to an object using computed properties
+    # .PARAMETER Collection
+    #     This parameter sets the target object
+    # .EXAMPLE
+    #     ******** With an Object *********
+    #     PS C:\Users\Admin> $t
 
-            PS C:\Users\Admin> $plusIndex = With-Index -Collection $t
-            PS C:\Users\Admin> $plusIndex
+    #     column2 column3 column1
+    #     ------- ------- -------
+    #     b1      c1      a1
+    #     b2      c2      a2
 
-            index column2 column3 column1
-            ----- ------- ------- -------
-                0 b1      c1      a1
-                1 b2      c2      a2
-        .EXAMPLE
-            ******** With an Array **********
-            PS C:\Users\diego> With-Index -Collection ($a | Select-Object -Property @{Name = "item"; Expression = {$_}})
+    #     PS C:\Users\Admin> $plusIndex = With-Index -Collection $t
+    #     PS C:\Users\Admin> $plusIndex
 
-            index item
-            ----- ----
-                0 a
-                1 b
-                2 c
-                3 d
-                4 e
-        .NOTES
-            dkabal14
-            diegorosariosousa@gmail.com
-        .LINK
-            https://github.com/dkabal14
-    #>
+    #     index column2 column3 column1
+    #     ----- ------- ------- -------
+    #         0 b1      c1      a1
+    #         1 b2      c2      a2
+    # .EXAMPLE
+    #     ******** With an Array **********
+    #     PS C:\Users\diego> With-Index -Collection ($a | Select-Object -Property @{Name = "item"; Expression = {$_}})
+
+    #     index item
+    #     ----- ----
+    #         0 a
+    #         1 b
+    #         2 c
+    #         3 d
+    #         4 e
+    # .NOTES
+    #     dkabal14
+    #     diegorosariosousa@gmail.com
+    # .LINK
+    #     https://github.com/dkabal14
+
     param (
         [Parameter()]
         [psobject]
