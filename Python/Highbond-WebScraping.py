@@ -12,8 +12,8 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from getpass import getpass
 from gettext import gettext
 
-email = gettext("e-mail")
-password = getpass()
+email = input("e-mail:")
+password = getpass("Senha:")
 
 
 class TestLoggingin():
@@ -25,8 +25,8 @@ class TestLoggingin():
     self.driver.quit()
   
   def test_loggingin(self):
-    self.driver.get("https://accounts.highbond.com/login")
-    self.driver.find_element(By.ID, "user_email").send_keys("diego.sousa@quality.com.br")
+    self.driver.get("https://accounts.highbond.com/login") 
+    self.driver.find_element(By.ID, "user_email").send_keys(email)
     self.driver.find_element(By.ID, "user_password").send_keys(password)
     self.driver.find_element(By.ID, "user_password").send_keys(Keys.ENTER)
     self.driver.find_element(By.LINK_TEXT, "Robôs").click()
@@ -34,4 +34,3 @@ class TestLoggingin():
     self.driver.find_element(By.CSS_SELECTOR, "span:nth-child(2) .dashboard__robot-list-item-button").click()
     self.driver.find_element(By.CLASS_NAME, "folder__robots")
     self.driver.find_element(By.CSS_SELECTOR, ".sc-bdVaJa").click()
-    self.driver.current_url
