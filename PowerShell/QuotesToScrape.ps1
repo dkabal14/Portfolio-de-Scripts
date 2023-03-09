@@ -12,7 +12,7 @@ function Add-Index {
     $result
 }
 
-#$Creds = Get-Credential -Message "Informe login e senha" -Title "Quotes To Scrape"
+$Creds = Get-Credential -Message "Logging in Quotes to Scrape" -Title "Quotes To Scrape"
 
 $BaseUri = "http://quotes.toscrape.com"
 $Site = Invoke-WebRequest -Uri $BaseUri
@@ -20,14 +20,16 @@ $Site = Invoke-WebRequest -Uri $BaseUri
 # Clicking on the login link    
 $Action = $Site.Links | Where-Object {$_.outerHTML -like "*Login*"} | Select-Object -ExpandProperty href
 $LoginUri = $BaseUri + $Action
+#Creating the cookies to keep logged on the website
 $LoginPage = Invoke-WebRequest -Uri $LoginUri -SessionVariable "TempSession"
 
 $csrf_token = $LoginPage.InputFields | Where-Object {$_.name -eq "csrf_token"} | Select-Object -ExpandProperty value
 
 #Filling the input forms of the login
+#Names of the fields were taken from Website elements using Google Chrome's DevTools
 $AuthBody = @{
-    username    = 'user' #$Creds.UserName
-    password    = 'password' #$Creds.Password
+    username    = $Creds.UserName
+    password    = $Creds.Password
     csrf_token  = $csrf_token
     Submit      = "Login"
 }
@@ -42,7 +44,7 @@ Do
     {
         $NextUri = $BaseUri
     }
-    #Getting the page's content, now logged in with TempSession cookie
+    #Getting the page's content, now logged in with TempSession's cookie
     $PageContent = Invoke-RestMethod -Uri $NextUri -WebSession $TempSession
 
     # Sample used to build the pattern:
@@ -98,7 +100,9 @@ Until (
     $null -eq $objNext
 )
 
-#Adding a index property to the data object
+#Adding a index property to the $Data object
 $iData = Add-Index -Collection $Data
 
 $iData
+
+# Next: Create a Function with parameters querying quotes by Author, Tags or QuotesURL page number and add a try catch to check for errors
