@@ -1,3 +1,5 @@
+#This is script was made referencing Emanuel Palm arcticle on https://pipe.how/invoke-webscrape/
+
 function Add-Index {
     param (
         [Parameter()]
