@@ -65,28 +65,26 @@ Do
     # (?<tags>.*)    -> Extract the list of tags to $matches table (Name = tags; Value = "Extracted tags (needs split (','))")
     # \n.* to jump a line
     # (\n.*){X} to jump a line X times
+    #"\" before round brackets are there for regex interpret the litteral character "(", the usual resonde would be for "(" be interpreted as the start of a class match
     $Pattern = '<span class="text" itemprop="text">(?<quote>.*)</span>\n.*<span>by <small class="author" itemprop="author">(?<author>.*)</small>(\n.*){5}<meta class="keywords" itemprop="keywords" content="(?<tags>.*)"'
 
-    # Pattern2 is not being used
-    # This pattern doesn't work because of this line:
-    #       <a href="(?<links>.*)">(about)</a> - <a href="(?<source>.*)">(Goodreads page)</a>
-    # When this line is skipped, the pattern works again, I had to do a turnaround with the function split inside the building of the $Data Variable
-    # NEEDS IMPROVEMENT
-    $Pattern2 = '<span class="text" itemprop="text">(?<quote>.*)</span>\n.*<span>by <small class="author" itemprop="author">(?<author>.*)</small>\n.*<a href="(?<links>.*)">(about)</a> - <a href="(?<source>.*)">(Goodreads page)</a>(\n.*){4}<meta class="keywords" itemprop="keywords" content="(?<tags>.*)"'
+    $Pattern2 = '<span class="text" itemprop="text">(?<quote>.*)</span>\n.*<span>by <small class="author" itemprop="author">(?<author>.*)</small>\n.*<a href="(?<links>.*)">\(about\)</a> - <a href="(?<source>.*)">\(Goodreads page\)</a>(\n.*){4}<meta class="keywords" itemprop="keywords" content="(?<tags>.*)"'
 
-    $Matches = ($PageContent | Select-String -Pattern $Pattern <# $Pattern2 #> -AllMatches).Matches
+    $Matches = ($PageContent | Select-String -Pattern $Pattern2 -AllMatches).Matches
 
     #Add info to $Data
     $Data += Foreach ($item in $Matches)
     {
-        $links = $item.Value.Split('<a href="').Split('">(about)')[1]
-        $source = $item.Value.Split('<a href="').Split('">(Goodreads page)')[2]
+        #$links = $item.Value.Split('<a href="').Split('">(about)')[1]
+        #$source = $item.Value.Split('<a href="').Split('">(Goodreads page)')[2]
         [PSCustomObject]@{
             # [System.Web.HttpUUtility] was used because some of the quotes had some special characters in it and HTML brings it like '&#39;'
             Quote = [System.Web.HttpUtility]::HtmlDecode(($Item.Groups.Where{$_.Name -like 'Quote'}).Value)
             Author = ($Item.Groups.Where{$_.Name -like 'Author'}).Value
-            About = $links
-            Source = $source
+            #About = $links
+            About = ($Item.Groups.Where{$_.Name -like 'links'}).Value
+            #Source = $source
+            Source = ($Item.Groups.Where{$_.Name -like 'source'}).Value
             Tags = ($Item.Groups.Where{$_.Name -like 'Tags'}).Value -split ','
             QuotesURL = $NextUri
         }
