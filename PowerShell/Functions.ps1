@@ -420,7 +420,7 @@ function randomWords()
     return $Texto
 }
 
-function With-Index {
+function Add-Index {
 
     # .SYNOPSIS
     #     This function will add an index column to an object using computed properties
@@ -456,7 +456,7 @@ function With-Index {
     #         3 d
     #         4 e
     # .NOTES
-    #     dkabal14
+    #     dkabal14 at GitHub
     #     diegorosariosousa@gmail.com
     # .LINK
     #     https://github.com/dkabal14
