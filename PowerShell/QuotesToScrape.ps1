@@ -120,9 +120,9 @@ function filter-Quotes {
     # #Case 5 $ChkAuthor = $True, $ChkTags = $False, $ChkPages = $True
     # #Case 6 $ChkAuthor = $True, $ChkTags = $True, $ChkPages = $False
     # #Case 7 $ChkAuthor = $True, $ChkTags = $True, $ChkPages = $True
-    # $TruthA = @(0, 0, 0, 0, 1, 1, 1, 1)
-    # $TruthB = @(0, 0, 1, 1, 0, 0, 1, 1)
-    # $TruthC = @(0, 1, 0, 1, 0, 1, 0, 1)
+    $TruthA = @(0, 0, 0, 0, 1, 1, 1, 1)
+    $TruthB = @(0, 0, 1, 1, 0, 0, 1, 1)
+    $TruthC = @(0, 1, 0, 1, 0, 1, 0, 1)
 
     $TruthTable = 0..7| foreach {
         [PSCustomObject]@{
