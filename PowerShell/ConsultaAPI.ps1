@@ -1,7 +1,6 @@
 ﻿$Pesquisa = Read-Host -Prompt "Digite a pesquisa do site Poring"
 #Conexão
 $Site = "https://poring.world/api/search?order=popularity&rarity=&inStock=1&modified=&category=&endCategory=&q=$Pesquisa"
-$Proxy = "http://10.21.7.10:82"
 
 $sair = $false
 Do
