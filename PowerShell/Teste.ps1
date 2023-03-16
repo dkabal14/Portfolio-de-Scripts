@@ -53,8 +53,24 @@ function Get-CredentialGUI
     {
         $result = [PSCustomObject]@{
             email = $tb1.text
-            senha = (Convertto-Securestring $tb2.text -AsPlaintext -Force)
+            senha = $tb2.text
         }
         return $result
     }
+}
+
+#Teste Criando um manifesto para um módulo de powershell
+function Create-ModuleManifest {
+    $ModuleName     = "Highbond-LaunchPadModule"
+    $path           = "C:\D\Scripts\Github\Portfolio-de-Scripts\PowerShell\LocalRepository\$ModuleName"
+    $CompanyName    = "Quality Software S.A."
+    $Author         = "Diego Rosário Sousa"
+    $CopyRights     = "2023, Quality Software S.A. All Rights Reserved"
+    $Description    = "Module to web-scrape robots' data from HighBond Launchpad API"
+    $ModuleVersion  = "0.0.1"
+    $rootModule     = "$path\$ModuleVersion\$ModuleName.psm1"
+    $dotNetVersion  = "3.5"
+    $Prerelease     = "alpha"
+    $Assemblies     = @("System.Windows.Forms","System.Drawing")
+    New-ModuleManifest -Path "$path\$ModuleVersion\$ModuleName.psd1" -CompanyName $CompanyName -Author $Author -Copyright $CopyRights -Description $Description -RootModule $rootModule -ModuleVersion $ModuleVersion -DotNetFrameworkVersion $dotNetVersion -Prerelease $Prerelease -TypesToProcess $Assemblies
 }
