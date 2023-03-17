@@ -1,5 +1,5 @@
 @ECHO OFF
-Title SIGLA DDD-IP__-__ IP-DDD por Diego Rosario Sousa
+Title SIGLA DDD-IP__-__ IP-DDD por Diego R.
 :COMECO
 ECHO ################################################################################
 ECHO ##                                                                            ##

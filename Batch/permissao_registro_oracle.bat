@@ -1,13 +1,12 @@
 @ECHO OFF
 color 17
-Title Permissao Oracle por Diego Rosario Sousa
+Title Permissao Oracle por Diego R.
 
 ECHO .
 ECHO ########################################################################
 ECHO #                                                                      #
 ECHO #                          PERMISSOES DO ORACLE                        #
 ECHO #                               N3 - SONDA                             #
-ECHO #                                                                      #
 ECHO ########################################################################
 ECHO.
 

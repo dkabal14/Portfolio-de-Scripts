@@ -1,10 +1,9 @@
 @ECHO OFF
 color 17
-title Autorizador de Chaves por Diego Rosario Sousa
+title Autorizador de Chaves por Diego R.
 ECHO ########################################################################
 ECHO #                                                                      #
 ECHO #                  AUTORIZADOR DE CHAVES DE REGISTRO                   #
-ECHO #                              N3 - SONDA                              #
 ECHO #                                                                      #
 ECHO ########################################################################
 ECHO.

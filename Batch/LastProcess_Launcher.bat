@@ -1,2 +1,3 @@
 @ECHO OFF
-CSCRIPT LastProcess.vbs
+SET BP=%~dp0
+CSCRIPT %BP%\.\VBScript\LastProcess.vbs

@@ -1,4 +1,4 @@
-::Batch escrita por Diego Rosário Sousa - Sonda IT - Suporte Nível 3 
-::diegos.sonda@contratada.oi.net.br
+::Batch escrita por Diego Rosï¿½rio Sousa - diegorosariosousa@gmail.com
 @echo off
-PowerShell MoveAD.ps1
+SET BP=%~bp0
+PowerShell %BP%\.\PowerShell\MoveAD.ps1
