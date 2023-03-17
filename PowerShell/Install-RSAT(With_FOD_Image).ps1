@@ -1,4 +1,7 @@
 #Ativar o Active Directory 20H2
+#FOD Image needs to be in the same folder of the script
+
+
 <#
     CASO A CONEXÃO NÃO PEGUE O NOME DOSA RQUIVOS ONLINE
     $rsatNames = @()
@@ -25,14 +28,18 @@
     $rsatNames += "Rsat.WSUS.Tools~~~~0.0.1.0"
 #>
  
-
+#In case your corporation doesn't allow External Windows Update Access
+<#
 Stop-Service 'wuauserv'
- 
+
+$statusService = http://SCMPRD01.DOMAIN.CORP:8530
+
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" -Name "DisableWindowsUpdateAccess" -Type DWord -Value 0
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" -Name "DoNotConnectToWindowsUpdateInternetLocations" -Type DWord -Value 0
 Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" -Name "WUServer" -ErrorAction SilentlyContinue
 Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" -Name "WUStatusServer" -ErrorAction SilentlyContinue
 Start-Service 'wuauserv'
+#>
 
 $ISO = Get-ChildItem -Path $PSScriptRoot | ForEach-Object {$_.FullName}
 Mount-DiskImage -ImagePath $ISO
@@ -52,8 +59,11 @@ foreach ($RSATComponent in $RSATComponents )
     "================================================================="
 }
 Dismount-DiskImage -ImagePath $ISO
+
+<#
 Stop-Service 'wuauserv'
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" -Name "DisableWindowsUpdateAccess" -Type DWord -Value 1
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" -Name "DoNotConnectToWindowsUpdateInternetLocations" -Type DWord -Value 1
-Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" -Name "WUServer" -Type String -Value "http://SCMPW11.oi.corp.net:8530"
-Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" -Name "WUStatusServer" -Type String -Value "http://SCMPW11.oi.corp.net:8530"
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" -Name "WUServer" -Type String -Value $statusService
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" -Name "WUStatusServer" -Type String -Value $statusService
+#>
