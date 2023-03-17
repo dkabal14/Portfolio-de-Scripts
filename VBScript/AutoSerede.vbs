@@ -1,51 +1,51 @@
-'Script escrito por Diego Rosário Sousa - diegos.sonda@contratada.oi.net.br
-'Sonda - Suporte Nível 3 RJ
+'Script escrito por Diego Rosï¿½rio Sousa - diegorosariosousa@gmail.com
+'Sonda - Suporte Nï¿½vel 3 RJ
 'Option Explicit
 'On Error Resume Next
 
-'VARIÁVEIS E CONSTANTES
+'VARIï¿½VEIS E CONSTANTES
 '========================================================================================================
-Dim strUsuarioAntigo 'Nome antigo que será alterado
+Dim strUsuarioAntigo 'Nome antigo que serï¿½ alterado
 Dim strUsuarioNovo 'Nome novo
-Dim strComputador 'Nome do Computador de destino "." indica o próprio micro
+Dim strComputador 'Nome do Computador de destino "." indica o prï¿½prio micro
 Dim objWMI 'Puxa o objeto de WMI
 Dim objProcesso 'Puxa a classe Win32_Process
-Dim vetUsuarios 'Vetor com o objeto do WMI que executou a pesquisa do nome do usuário antigo
-Dim iteUsuario 'Variável do laço que renomeia a propriedade do WMI utilizada para iteração
-Dim objUsuario 'objeto WinNT para alteração das propriedades dos usuários locais
+Dim vetUsuarios 'Vetor com o objeto do WMI que executou a pesquisa do nome do usuï¿½rio antigo
+Dim iteUsuario 'Variï¿½vel do laï¿½o que renomeia a propriedade do WMI utilizada para iteraï¿½ï¿½o
+Dim objUsuario 'objeto WinNT para alteraï¿½ï¿½o das propriedades dos usuï¿½rios locais
 Dim intFlags 'Flags de dentro de objUsuario
 Const ADS_UF_SCRIPT                                  = &h1 'flag do script de logon
 Const ADS_UF_ACCOUNTDISABLE                          = &h2 'flag conta desabilitada
-Const ADS_UF_HOMEDIR_REQUIRED                        = &h8 'flag Diretório do perfil
+Const ADS_UF_HOMEDIR_REQUIRED                        = &h8 'flag Diretï¿½rio do perfil
 Const ADS_UF_LOCKOUT                                 = &h10 'flag Bloqueado
-Const ADS_UF_PASSWD_NOTREQD                          = &h20 'flag senha não requerida 
+Const ADS_UF_PASSWD_NOTREQD                          = &h20 'flag senha nï¿½o requerida 
 Const ADS_UF_PASSWD_CANT_CHANGE                      = &h40 'flag senha nunca muda
 Const ADS_UF_ENCRYPTED_TEXT_PASSWORD_ALLOWED         = &h80 'flag senha de texto encriptado permitida
-Const ADS_UF_TEMP_DUPLICATE_ACCOUNT                  = &h100 'flag conta temporário ou duplicada
+Const ADS_UF_TEMP_DUPLICATE_ACCOUNT                  = &h100 'flag conta temporï¿½rio ou duplicada
 Const ADS_UF_NORMAL_ACCOUNT                          = &h200 'flag conta normal
-Const ADS_UF_INTERDOMAIN_TRUST_ACCOUNT               = &h800 'flag conta confiável entredomínios
-Const ADS_UF_WORKSTATION_TRUST_ACCOUNT               = &h1000 'flag conta confiável de estação de trabalho
-Const ADS_UF_SERVER_TRUST_ACCOUNT                    = &h2000 'flag conta confiável do servidor
+Const ADS_UF_INTERDOMAIN_TRUST_ACCOUNT               = &h800 'flag conta confiï¿½vel entredomï¿½nios
+Const ADS_UF_WORKSTATION_TRUST_ACCOUNT               = &h1000 'flag conta confiï¿½vel de estaï¿½ï¿½o de trabalho
+Const ADS_UF_SERVER_TRUST_ACCOUNT                    = &h2000 'flag conta confiï¿½vel do servidor
 Const ADS_UF_DONT_EXPIRE_PASSWD                      = &h10000 'flag senha nunca expira
 Const ADS_UF_MNS_LOGON_ACCOUNT                       = &h20000 'flag conta de logon nms
 Const ADS_UF_SMARTCARD_REQUIRED                      = &h40000 'flag SmartCard requerido
-Const ADS_UF_TRUSTED_FOR_DELEGATION                  = &h80000 'flag confiado para delegação
-Const ADS_UF_NOT_DELEGATED                           = &h100000 'flag não delegado
+Const ADS_UF_TRUSTED_FOR_DELEGATION                  = &h80000 'flag confiado para delegaï¿½ï¿½o
+Const ADS_UF_NOT_DELEGATED                           = &h100000 'flag nï¿½o delegado
 Const ADS_UF_USE_DES_KEY_ONLY                        = &h200000 'flag somente chave
-Const ADS_UF_DONT_REQUIRE_PREAUTH                    = &h400000 'flag não requer utenticação
+Const ADS_UF_DONT_REQUIRE_PREAUTH                    = &h400000 'flag nï¿½o requer utenticaï¿½ï¿½o
 Const ADS_UF_PASSWORD_EXPIRED                        = &h800000 'flag sen expirada
-Const ADS_UF_TRUSTED_TO_AUTHENTICATE_FOR_DELEGATION  = &h1000000 'flag confiado para autenticar para delegação
+Const ADS_UF_TRUSTED_TO_AUTHENTICATE_FOR_DELEGATION  = &h1000000 'flag confiado para autenticar para delegaï¿½ï¿½o
 Dim strPassword 'Novo password do user local
-Dim strDescricao 'descrição da conta criada
+Dim strDescricao 'descriï¿½ï¿½o da conta criada
 Const HKEY_CLASSES_ROOT   = &H80000000 'caminho para o hive de registro de HKEY_CLASSES_ROOT
 Const HKEY_CURRENT_USER   = &H80000001 'caminho para o hive de registro de HKEY_CURRENT_USER
 Const HKEY_LOCAL_MACHINE  = &H80000002 'caminho para o hive de registro de HKEY_LOCAL_MACHINE
 Const HKEY_USERS          = &H80000003 'caminho para o hive de registro de HKEY_USERS
-Const REG_SZ              = 1 'número que identifica strings de registro
-Const REG_EXPAND_SZ       = 2 'número que identifica strings expandidas de registro
-Const REG_BINARY          = 3 'número que identifica binários de registro
-Const REG_DWORD           = 4 'número que identifica DWORDS de registro
-Const REG_MULTI_SZ        = 7 'número que identifica multi strings de registro
+Const REG_SZ              = 1 'nï¿½mero que identifica strings de registro
+Const REG_EXPAND_SZ       = 2 'nï¿½mero que identifica strings expandidas de registro
+Const REG_BINARY          = 3 'nï¿½mero que identifica binï¿½rios de registro
+Const REG_DWORD           = 4 'nï¿½mero que identifica DWORDS de registro
+Const REG_MULTI_SZ        = 7 'nï¿½mero que identifica multi strings de registro
 Const JOIN_DOMAIN = 1
 Const ACCT_CREATE = 2
 Const ACCT_DELETE = 4
@@ -55,6 +55,8 @@ Const JOIN_UNSECURE = 64
 Const MACHINE_PASSWORD_PASSED = 128
 Const DEFERRED_SPN_SET = 256
 Const INSTALL_INVOCATION = 262144
+Const SCCM_SERVER = "SCMPROD01.domain.corp.co"
+Const DOMAIN = "domain.corp.co"
 '========================================================================================================
 
 
@@ -63,7 +65,7 @@ CriaSupervisor
 CriaAdministrador
 AtivaDNSAutomatico
 ChamaPropriedadeNome
-MsgBox "Fim do Script!" & vbCrLf & vbCrLf & "favor verificar se deu tudo certo ;)", vbOKOnly, "Automação Projeto Serede"
+MsgBox "Fim do Script!" & vbCrLf & vbCrLf & "favor verificar se deu tudo certo ;)", vbOKOnly, "Automaï¿½ï¿½o Projeto Serede"
 '=============================================================
 
 
@@ -72,12 +74,12 @@ MsgBox "Fim do Script!" & vbCrLf & vbCrLf & "favor verificar se deu tudo certo ;
 Sub AdicionaGrupos
 End Sub
 '=============================================================
-Sub AlteraHostname 'Sub-rotina só funciona com o sistema fora do domínio
+Sub AlteraHostname 'Sub-rotina sï¿½ funciona com o sistema fora do domï¿½nio
 	strComputador = "."
 
-	strTipo = InputBox("Insira o tipo do computador" & vbCrLf & vbCrLf & "'D' para desktop" & vbCrLf & "'L' para laptop","Automação Projeto Serede")
+	strTipo = InputBox("Insira o tipo do computador" & vbCrLf & vbCrLf & "'D' para desktop" & vbCrLf & "'L' para laptop","Automaï¿½ï¿½o Projeto Serede")
 
-	strPatrimonio = InputBox("Insira os cinco últimos números da etiqueta de Patrimônio (etiqueta de TI)",,"Automação Projeto Serede") 
+	strPatrimonio = InputBox("Insira os cinco ï¿½ltimos nï¿½meros da etiqueta de Patrimï¿½nio (etiqueta de TI)",,"Automaï¿½ï¿½o Projeto Serede") 
 	
 	Set objWMIService = GetObject("winmgmts:\\" & strComputador & "\root\cimv2")
 	
@@ -89,7 +91,7 @@ Sub AlteraHostname 'Sub-rotina só funciona com o sistema fora do domínio
 		ElseIf strTipo = "L" Then
 			strPrefixo = "LAPPSRD0"
 		Else
-			WScript.Echo "TIPO DIGITADO INCORRETAMENTE, FAVOR INSERIR A INFORMAÇÃO CORRETA"
+			WScript.Echo "TIPO DIGITADO INCORRETAMENTE, FAVOR INSERIR A INFORMAï¿½ï¿½O CORRETA"
 			WScript.Quit
 		End If
 		objComputador.Rename(strPrefixo & strPatrimonio)
@@ -97,7 +99,7 @@ Sub AlteraHostname 'Sub-rotina só funciona com o sistema fora do domínio
 	WScript.Echo "AlteraHostname Feito!"
 End Sub
 '=================================================================================================
-Sub AtivaDNSAutomatico 'Ativa a busca automática do DNS
+Sub AtivaDNSAutomatico 'Ativa a busca automï¿½tica do DNS
 	strComputador = "."
 	Set objWMI = GetObject("WinMgmts:\\" & strComputador & "\root\cimv2")
 	Set objRegistry = objWMI.Get("StdRegProv")
@@ -120,7 +122,7 @@ Sub ChamaPropriedadeNome 'Chama a janela de propriedades de nome do computador
 	objWshShell.Run "C:\Windows\System32\SystemPropertiesComputerName.exe",1,True
 End Sub
 '=================================================================================================
-Sub CriaAdministrador 'Cria o fake ADM, seta a senha, descrição e as flags necessárias
+Sub CriaAdministrador 'Cria o fake ADM, seta a senha, descriï¿½ï¿½o e as flags necessï¿½rias
 	strComputador = "."
 	strUsuarioNovo = "Administrador"
 	strPassword = "Telemar@31"
@@ -138,7 +140,7 @@ Sub CriaAdministrador 'Cria o fake ADM, seta a senha, descrição e as flags neces
 	objUsuario.Put "userFlags", intFlags
 	objUsuario.SetInfo
 	
-	Set objGrupo = GetObject("WinNT://" & strComputador & "/Usuários")
+	Set objGrupo = GetObject("WinNT://" & strComputador & "/Usuï¿½rios")
 	For Each iteUsuario In objGrupo.Members
 		If InStr(iteUsuario.adspath,strUsuarioNovo) > 0 Then
 			objGrupo.Remove(iteUsuario.AdsPath)
@@ -147,11 +149,11 @@ Sub CriaAdministrador 'Cria o fake ADM, seta a senha, descrição e as flags neces
 	WScript.Echo "CriaAdministrador Feito!"
 End Sub
 '=================================================================================================
-Sub CriaSupervisor 'Cria o usuário supervisor, seta a senha padrão e a descrição
+Sub CriaSupervisor 'Cria o usuï¿½rio supervisor, seta a senha padrï¿½o e a descriï¿½ï¿½o
 	strUsuarioAntigo = "Administrador"
 	strUsuarioNovo = "Supervisor"
 	strSenha = "#SUPPORT13s123"
-	strDescricao = "Conta interna para a administração do computador/domínio"
+	strDescricao = "Conta interna para a administraï¿½ï¿½o do computador/domï¿½nio"
 	
 	strComputador = "."
 	Set objWMI = GetObject("WinMgmts:\\" & strComputador & "\root\Cimv2")
@@ -174,12 +176,12 @@ Sub CriaSupervisor 'Cria o usuário supervisor, seta a senha padrão e a descrição
 	WScript.Echo "CriaSupervisor Feito!"
 End Sub
 '=================================================================================================
-Function DiretorioDoScript 'Retorna o diretório do Script
+Function DiretorioDoScript 'Retorna o diretï¿½rio do Script
 	DiretorioDoScript = Replace(WScript.ScriptFullName,WScript.ScriptName,"")
 End Function
 '=================================================================================================
 Sub InsereDominio
-	strDomain = "oi.corp.net"
+	strDomain = DOMAIN
 	strPassword = "Senha"
 	strUser = "TCXXXXXX"
 	 
@@ -192,7 +194,7 @@ Sub InsereDominio
 		WScript.Echo "InsereDominio Feito!"
 End Sub
 '=================================================================================================
-Sub InstalaCyberS 'Inicia a instalação do CyberS
+Sub InstalaCyberS 'Inicia a instalaï¿½ï¿½o do CyberS
 	Set objWshShell = CreateObject("Wscript.Shell")
 	objWshShell.Run DiretorioDoScript & "\CyberS\Install_Cybers.exe",1,True
 	WScript.Echo "InstalaCyberS Feito!"
@@ -200,17 +202,17 @@ End Sub
 '=================================================================================================
 Sub InstalaSCCM
 	Set objWshShell = CreateObject("Wscript.Shell")
-	objWshShell.Run DiretorioDoScript & "\SystemCenterConfigurationManager\ccmsetup.exe /mp:scmpw08.oi.corp.net SMSSITECODE=DCM DNSSUFFIX=oi.corp.net FSP=scmpw08.oi.corp.net /BITSPriority:HIGH",1,True
+	objWshShell.Run DiretorioDoScript & "\SystemCenterConfigurationManager\ccmsetup.exe /mp:" & SCCM_SERVER & " SMSSITECODE=DCM DNSSUFFIX=" & DOMAIN & " FSP=" & SCCM_SERVER & " /BITSPriority:HIGH",1,True
 	WScript.Echo "InstalaSCCM Feito!"
 End Sub
 '=================================================================================================
-Sub InstalaSEP32 'Inicia a instalação do SEP 32 bits
+Sub InstalaSEP32 'Inicia a instalaï¿½ï¿½o do SEP 32 bits
 	Set objWshShell = CreateObject("Wscript.Shell")
 	objWshShell.Run DiretorioDoScript & "\SymantecEndpointProtecton_32\Sep.msi /qb! /l*v " & Chr(34) & DiretorioDoScript & "\SEP_INST.LOG" & Chr(34),1,True
 	WScript.Echo "InstalaSEP Feito!"
 End Sub
 '=================================================================================================
-Sub InstalaSEP64 'Inicia a instalação do SEP 64 bits
+Sub InstalaSEP64 'Inicia a instalaï¿½ï¿½o do SEP 64 bits
 	Set objWshShell = CreateObject("Wscript.Shell")
 	objWshShell.Run DiretorioDoScript & "\SymantecEndpointProtecton_64\Sep64.msi /qb! /l*v " & Chr(34) & DiretorioDoScript & "\SEP_INST.LOG" & Chr(34),1,True
 	WScript.Echo "InstalaSEP Feito!"

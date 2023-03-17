@@ -15,11 +15,11 @@ Else
 End If
 
 
-strComputer = InputBox("Digite o nome da máquina:","monitoramento")
+strComputer = InputBox("Digite o nome da mï¿½quina:","monitoramento")
 
 Set objWMIService = GetObject("winmgmts:{impersonationLevel=impersonate}!\\" & strComputer & "\root\cimv2")
 Set colMonitoredProcesses = objWMIService.ExecNotificationQuery(_
-"select * from __instancecreationevent within 1 where TargetInstance isa 'Win32_Process'"_
+    "select * from __instancecreationevent within 1 where TargetInstance isa 'Win32_Process'"_
 )
 
 i = 0

@@ -6,10 +6,10 @@ ColocaUsuarioNoGrupo
 Sub ColocaUsuarioNoGrupo
 	Set objGrupoLocal = GetObject("WinNT://./Administradores,group")
 	
-	arrGrupos = Array("OIDESKADMIN_OI","OIDESKADMIN","Sonda_Onsite OI","Sonda_Onsite")
+	arrGrupos = Array("Admin1","Admin2","Admin 3","Admin 4")
 	
 	For Each objGrupo In arrGrupos
-		Set objDomainUser = GetObject("WinNT://oi.corp.net/" & objGrupo & ",group")
+		Set objDomainUser = GetObject("WinNT://domain.net.co/" & objGrupo & ",group")
 		If (objLocalGroup.IsMember(objDomainUser.ADsPath) = False) Then
 		    objLocalGroup.Add(objDomainUser.ADsPath)
 		End If
