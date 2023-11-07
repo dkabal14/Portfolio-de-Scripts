@@ -1,76 +1,41 @@
-﻿#Teste Get-CredentialGUI
-Add-Type -AssemblyName System.Windows.Forms
-Add-Type -AssemblyName System.Drawing
-function Get-CredentialGUI
-{
-    [CmdletBinding()]
-    param (
-        [Parameter(Mandatory=$false)]
-        [string]
-        $Titulo
-    )
-    $inputForm = New-Object System.Windows.Forms.Form
-    $inputForm.Text = $Titulo
-    $inputForm.Size = New-Object System.Drawing.Size(350,200)
-    $inputForm.StartPosition = 'CenterScreen'
-    $inputForm.Icon = ('C:\d\Scripts\Github\Portfolio-de-Scripts\PowerShell\Hihgbond-LaunchPadModule\Resources\Highbond-icon.ico')
-
-    $lb = New-Object System.Windows.Forms.Label
-    $lb.Location = New-Object System.Drawing.Point(20,20)
-    $lb.Size = New-Object System.Drawing.Size(240,20)
-    $lb.Text = "E-mail:"
-    $inputForm.Controls.Add($lb)
-
-    $tb1 = New-Object System.Windows.Forms.TextBox
-    $tb1.Location = New-Object System.Drawing.Point(20,40)
-    $tb1.Size = New-Object System.Drawing.Size(240,20)
-    $inputForm.Controls.Add($tb1)
-
-    $lb2 = New-Object System.Windows.Forms.Label
-    $lb2.Location = New-Object System.Drawing.Point(20,60)
-    $lb2.Size = New-Object System.Drawing.Size(240,20)
-    $lb2.Text = "Senha"
-    $inputForm.Controls.Add($lb2)
-
-    $tb2 = New-Object System.Windows.Forms.TextBox
-    $tb2.Location = New-Object System.Drawing.Point(20,80)
-    $tb2.Size = New-Object System.Drawing.Size(240,20)
-    $tb2.PasswordChar = '#'
-    $inputForm.Controls.Add($tb2)
-
-    $okb = New-Object System.Windows.Forms.Button
-    $okb.Location = New-Object System.Drawing.Point(20,105)
-    $okb.Size = New-Object System.Drawing.Size(75,25)
-    $okb.Text = 'Ok'
-    $okb.DialogResult = [System.Windows.Forms.DialogResult]::OK
-    $inputForm.AcceptButton = $okb
-    $inputForm.Controls.Add($okb)
-
-    $inputForm.Topmost = $true
-    $inputForm.Add_Shown({$tb1.Select()})
-    $rs = $inputForm.ShowDialog()
-    if ($rs -eq [System.Windows.Forms.DialogResult]::OK)
-    {
-        $result = [PSCustomObject]@{
-            email = $tb1.text
-            senha = $tb2.text
-        }
-        return $result
-    }
-}
-
-#Teste Criando um manifesto para um módulo de powershell
-function Create-ModuleManifest {
-    $ModuleName     = "Highbond-LaunchPadModule"
-    $path           = "C:\D\Scripts\Github\Portfolio-de-Scripts\PowerShell\LocalRepository\$ModuleName"
-    $CompanyName    = "Quality Software S.A."
-    $Author         = "Diego Rosário Sousa"
-    $CopyRights     = "2023, Quality Software S.A. All Rights Reserved"
-    $Description    = "Module to web-scrape robots' data from HighBond Launchpad API"
-    $ModuleVersion  = "0.0.1"
-    $rootModule     = "$path\$ModuleVersion\$ModuleName.psm1"
-    $dotNetVersion  = "3.5"
-    $Prerelease     = "alpha"
-    $Assemblies     = @("System.Windows.Forms","System.Drawing")
-    New-ModuleManifest -Path "$path\$ModuleVersion\$ModuleName.psd1" -CompanyName $CompanyName -Author $Author -Copyright $CopyRights -Description $Description -RootModule $rootModule -ModuleVersion $ModuleVersion -DotNetFrameworkVersion $dotNetVersion -Prerelease $Prerelease -TypesToProcess $Assemblies
-}
+﻿$session = New-Object Microsoft.PowerShell.Commands.WebRequestSession
+$session.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36 Edg/118.0.2088.69"
+$session.Cookies.Add((New-Object System.Net.Cookie("visitor_id", "adefbd774efe365c4303fadee474574a", "/", ".highbond.com")))
+$session.Cookies.Add((New-Object System.Net.Cookie("_results_session", "39jG3wwf7xsjsD%2Bt0Ti3DVWdFioWWsAA2TIV77DgHHNdxlxLXZAJuMxpyMzFV1rQldfFeoFxAabhOVyDADBFUE7Zd5EDPOnq3LKJko%2BApzkiBN1ZCQwv5zVcjdEtRNbOMqPT%2BM7Hp%2Fefc5tyjCxAKBvNdpgotGygqvvAg2oDpgLYId1Ncimx7g%3D%3D--qA%2Bq3GDHlQChMCyg--%2BHQ6DKfoQNyZpL711bZZSA%3D%3D", "/", ".highbond.com")))
+$session.Cookies.Add((New-Object System.Net.Cookie("_gid", "GA1.2.1232060066.1698767773", "/", ".highbond.com")))
+$session.Cookies.Add((New-Object System.Net.Cookie("_ga", "GA1.1.775377995.1697154951", "/", ".highbond.com")))
+$session.Cookies.Add((New-Object System.Net.Cookie("_ga_Q5DCC19Q13", "GS1.2.1698772328.18.0.1698772328.60.0.0", "/", ".highbond.com")))
+$session.Cookies.Add((New-Object System.Net.Cookie("_ga_736EHX75WZ", "GS1.1.1698772308.13.1.1698772816.0.0.0", "/", ".highbond.com")))
+$session.Cookies.Add((New-Object System.Net.Cookie("session", "cdd48d3d56da9c3c2005c418fd537452", "/", ".highbond.com")))
+$session.Cookies.Add((New-Object System.Net.Cookie("rmValue", "NUMt8cyTErEctqzK%2F9STMLlb8C4wwm24%2BF4bUs9O1nQZvKv2N0FdiOEavj6i4LhMTvfKBz5Cbe8bJzaCZhGWlLAZru0OGNukX5lr6M%2BMYgURRnOnvh%2BeXbVTnHRH%2B2ChUf9xRAKPLjXdg%2FOCCvsIk9Kwy9kVC8kYufJSQIxaS34%3D", "/", ".highbond.com")))
+$session.Cookies.Add((New-Object System.Net.Cookie("JSESSIONID", "E2665192169E9424E4057290954870C4", "/", "reports.highbond.com")))
+$session.Cookies.Add((New-Object System.Net.Cookie("highbond", "eyJraWQiOiJkZWRjZDRjYmRhZjg2YjE4ZWIyZjFkNTg5Yjk0YWRjNDc3YmQ1ZmE1NjYxZDY0YjllNTU0ZmI0NTU4NDNhNDVjIiwiYWxnIjoiUlMyNTYifQ.eyJuYW1lIjoiRGllZ28gUm9zYXJpbyBTb3VzYSIsImVtYWlsIjoiZGllZ28uc291c2FAcXVhbGl0eS5jb20uYnIiLCJ1aWQiOiI2d1d4Skc4Z3c2UEwtdFRIeXNGWCIsInN1YiI6IjZ3V3hKRzhndzZQTC10VEh5c0ZYIiwibG9jYWxlIjoicHQiLCJ0aW1lem9uZSI6IkJyYXNpbGlhIiwidGltZXpvbmVfb2Zmc2V0IjoiLTAzOjAwIiwiZGF0ZV9mb3JtYXQiOiIlZFwvJW1cLyVZIiwiZXhwIjoxNjk4ODQ4OTAxLCJpYXQiOjE2OTg4NDUzMDEsImludGVybmFsX2FkbWluX3JvbGUiOm51bGwsImxhc3RfbG9nZ2VkX2luX29yZyI6eyJvcmdfaWQiOiIzODY5MCIsInN1YmRvbWFpbiI6InBldHJvYnJhcy1jb25mb3JtaWRhZGUiLCJyZWdpb24iOiJTQSIsInN1YnNjcmlwdGlvbl9zdGF0ZSI6ImFjdGl2ZSJ9LCJib3VuZF9pcCI6IjIwMS4xNy42MC4yNiIsIndoaXRlbGlzdF9pcCI6ZmFsc2UsIm9yZ19pZCI6Mzg2OTAsInN1YmRvbWFpbiI6InBldHJvYnJhcy1jb25mb3JtaWRhZGUifQ.EsObBnPGagSEbSQG3Z6hbOBQP_X4WPX6GW380tWqPMj2B_Cfhxvrt3WQ5ExnITJo90aASevk0bJs3pSl7I94NRD4BIsC6qY7WmmsZaLer0txW0UZAhErH2C-VTZpNsj3rLXcTbSJKgWZp5wids2_25uPZZ_iwGkVJsirnlVtjgVzs6GrrGCgxQSuk4wfK8-R4wvytykwHMrPrr3uxGqUlSltW4kwewQuI--VBYq9LM7YqQAePWqGlWPM6fyBtvbnU0VDPtwCdaYaVTeeTHvy48s9ygZiOc5rmaA2qmkMCGyRQKkINfyAPTDOEdOcKeUaGfyiFguMdmEscsERx9N1qw", "/", ".highbond.com")))
+$session.Cookies.Add((New-Object System.Net.Cookie("AWSALBTG", "S/Ohquv5so3eG/OhhwEC2lbTcmG+Bfmp4dnhbAhZqPGTSXYj9p0UopvwYf9UToBOP2dJpIpjC1pnpLhppTV5AgPOhVWxcw9Clau/2KtEBKjnMSqJVz6cqPJGzXpqIBQG2oaCcjr6OTlhJrD+S8HhrhEbSVBN+W4uD2eZIbDuEklB640t4cOpKwjD6VIjjqheK4F12Y6sr3+MjBIo+gqBI3l+MYhKT+5gkDke32z56H/jSVxiAAq9cZwah7EI/Yuj", "/", "reports.highbond.com")))
+$session.Cookies.Add((New-Object System.Net.Cookie("AWSALBTGCORS", "S/Ohquv5so3eG/OhhwEC2lbTcmG+Bfmp4dnhbAhZqPGTSXYj9p0UopvwYf9UToBOP2dJpIpjC1pnpLhppTV5AgPOhVWxcw9Clau/2KtEBKjnMSqJVz6cqPJGzXpqIBQG2oaCcjr6OTlhJrD+S8HhrhEbSVBN+W4uD2eZIbDuEklB640t4cOpKwjD6VIjjqheK4F12Y6sr3+MjBIo+gqBI3l+MYhKT+5gkDke32z56H/jSVxiAAq9cZwah7EI/Yuj", "/", "reports.highbond.com")))
+$session.Cookies.Add((New-Object System.Net.Cookie("AWSALB", "otLi36op66fbg305OxYRcPuCAo3SLL+zT6acbPTACIsmJhX3NZKnFFocq4PkTqHfwmBie3mW6RpZhdAcn2dk9FXDCduVjzYZciUGix2eetUx6S7SKbcBCRsexP/J", "/", "reports.highbond.com")))
+$session.Cookies.Add((New-Object System.Net.Cookie("AWSALBCORS", "otLi36op66fbg305OxYRcPuCAo3SLL+zT6acbPTACIsmJhX3NZKnFFocq4PkTqHfwmBie3mW6RpZhdAcn2dk9FXDCduVjzYZciUGix2eetUx6S7SKbcBCRsexP/J", "/", "reports.highbond.com")))
+$Pagina_Download = Invoke-WebRequest -UseBasicParsing -Uri "https://reports.highbond.com/MIReportOutput.i4;6d382c39-1936-427b-8f67-321f1174a6c0=811d423b-092d-4ccf-ba4e-23461aaf7167?" `
+-Method "POST" `
+-WebSession $session `
+-Headers @{
+"authority"="reports.highbond.com"
+  "method"="POST"
+  "path"="/MIReportOutput.i4;6d382c39-1936-427b-8f67-321f1174a6c0=811d423b-092d-4ccf-ba4e-23461aaf7167?"
+  "scheme"="https"
+  "accept"="text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"
+  "accept-encoding"="gzip, deflate, br"
+  "accept-language"="pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7,en-GB;q=0.6"
+  "cache-control"="max-age=0"
+  "origin"="https://reports.highbond.com"
+  "referer"="https://reports.highbond.com/RunReport.i4;6d382c39-1936-427b-8f67-321f1174a6c0=811d423b-092d-4ccf-ba4e-23461aaf7167?reportUUID=0c241ed6-f27d-46cd-83d4-9fb3ae364fcc&primaryOrg=1&clientOrg=28844&6d382c39-1936-427b-8f67-321f1174a6c0=811d423b-092d-4ccf-ba4e-23461aaf7167"
+  "sec-ch-ua"="`"Chromium`";v=`"118`", `"Microsoft Edge`";v=`"118`", `"Not=A?Brand`";v=`"99`""
+  "sec-ch-ua-mobile"="?0"
+  "sec-ch-ua-platform"="`"Windows`""
+  "sec-fetch-dest"="document"
+  "sec-fetch-mode"="navigate"
+  "sec-fetch-site"="same-origin"
+  "sec-fetch-user"="?1"
+  "upgrade-insecure-requests"="1"
+} `
+-ContentType "multipart/form-data; boundary=----WebKitFormBoundarypRGxFImBBBq6c7CR" `
+-Body ([System.Text.Encoding]::UTF8.GetBytes("------WebKitFormBoundarypRGxFImBBBq6c7CR$([char]13)$([char]10)Content-Disposition: form-data; name=`"action`"$([char]13)$([char]10)$([char]13)$([char]10)btnExportXLS$([char]13)$([char]10)------WebKitFormBoundarypRGxFImBBBq6c7CR$([char]13)$([char]10)Content-Disposition: form-data; name=`"subAction`"$([char]13)$([char]10)$([char]13)$([char]10)$([char]13)$([char]10)------WebKitFormBoundarypRGxFImBBBq6c7CR$([char]13)$([char]10)Content-Disposition: form-data; name=`"editChartId`"$([char]13)$([char]10)$([char]13)$([char]10)$([char]13)$([char]10)------WebKitFormBoundarypRGxFImBBBq6c7CR$([char]13)$([char]10)Content-Disposition: form-data; name=`"menuAction`"$([char]13)$([char]10)$([char]13)$([char]10)$([char]13)$([char]10)------WebKitFormBoundarypRGxFImBBBq6c7CR$([char]13)$([char]10)Content-Disposition: form-data; name=`"searchKey`"$([char]13)$([char]10)$([char]13)$([char]10)$([char]13)$([char]10)------WebKitFormBoundarypRGxFImBBBq6c7CR$([char]13)$([char]10)Content-Disposition: form-data; name=`"forceDelete`"$([char]13)$([char]10)$([char]13)$([char]10)$([char]13)$([char]10)------WebKitFormBoundarypRGxFImBBBq6c7CR$([char]13)$([char]10)Content-Disposition: form-data; name=`"annotationAction`"$([char]13)$([char]10)$([char]13)$([char]10)$([char]13)$([char]10)------WebKitFormBoundarypRGxFImBBBq6c7CR$([char]13)$([char]10)Content-Disposition: form-data; name=`"editingAnno`"$([char]13)$([char]10)$([char]13)$([char]10)$([char]13)$([char]10)------WebKitFormBoundarypRGxFImBBBq6c7CR$([char]13)$([char]10)Content-Disposition: form-data; name=`"annoStart.d`"$([char]13)$([char]10)$([char]13)$([char]10)$([char]13)$([char]10)------WebKitFormBoundarypRGxFImBBBq6c7CR$([char]13)$([char]10)Content-Disposition: form-data; name=`"annoStart.m`"$([char]13)$([char]10)$([char]13)$([char]10)$([char]13)$([char]10)------WebKitFormBoundarypRGxFImBBBq6c7CR$([char]13)$([char]10)Content-Disposition: form-data; name=`"annoStart.y`"$([char]13)$([char]10)$([char]13)$([char]10)$([char]13)$([char]10)------WebKitFormBoundarypRGxFImBBBq6c7CR$([char]13)$([char]10)Content-Disposition: form-data; name=`"annoEnd.d`"$([char]13)$([char]10)$([char]13)$([char]10)$([char]13)$([char]10)------WebKitFormBoundarypRGxFImBBBq6c7CR$([char]13)$([char]10)Content-Disposition: form-data; name=`"annoEnd.m`"$([char]13)$([char]10)$([char]13)$([char]10)$([char]13)$([char]10)------WebKitFormBoundarypRGxFImBBBq6c7CR$([char]13)$([char]10)Content-Disposition: form-data; name=`"annoEnd.y`"$([char]13)$([char]10)$([char]13)$([char]10)$([char]13)$([char]10)------WebKitFormBoundarypRGxFImBBBq6c7CR$([char]13)$([char]10)Content-Disposition: form-data; name=`"annoRangeColour`"$([char]13)$([char]10)$([char]13)$([char]10)$([char]13)$([char]10)------WebKitFormBoundarypRGxFImBBBq6c7CR$([char]13)$([char]10)Content-Disposition: form-data; name=`"annoLevel`"$([char]13)$([char]10)$([char]13)$([char]10)$([char]13)$([char]10)------WebKitFormBoundarypRGxFImBBBq6c7CR$([char]13)$([char]10)Content-Disposition: form-data; name=`"annoFilterLink`"$([char]13)$([char]10)$([char]13)$([char]10)$([char]13)$([char]10)------WebKitFormBoundarypRGxFImBBBq6c7CR$([char]13)$([char]10)Content-Disposition: form-data; name=`"annoFilterVal`"$([char]13)$([char]10)$([char]13)$([char]10)$([char]13)$([char]10)------WebKitFormBoundarypRGxFImBBBq6c7CR$([char]13)$([char]10)Content-Disposition: form-data; name=`"annoFilterDisplay`"$([char]13)$([char]10)$([char]13)$([char]10)$([char]13)$([char]10)------WebKitFormBoundarypRGxFImBBBq6c7CR$([char]13)$([char]10)Content-Disposition: form-data; name=`"annoTitle`"$([char]13)$([char]10)$([char]13)$([char]10)$([char]13)$([char]10)------WebKitFormBoundarypRGxFImBBBq6c7CR$([char]13)$([char]10)Content-Disposition: form-data; name=`"annoValue`"$([char]13)$([char]10)$([char]13)$([char]10)$([char]13)$([char]10)------WebKitFormBoundarypRGxFImBBBq6c7CR$([char]13)$([char]10)Content-Disposition: form-data; name=`"search|annoSearchBox|allowRecipientReports`"$([char]13)$([char]10)$([char]13)$([char]10)false$([char]13)$([char]10)------WebKitFormBoundarypRGxFImBBBq6c7CR$([char]13)$([char]10)Content-Disposition: form-data; name=`"search|annoSearchBox|restrictResults`"$([char]13)$([char]10)$([char]13)$([char]10)false$([char]13)$([char]10)------WebKitFormBoundarypRGxFImBBBq6c7CR$([char]13)$([char]10)Content-Disposition: form-data; name=`"search|annoSearchBox|includeLDAP`"$([char]13)$([char]10)$([char]13)$([char]10)false$([char]13)$([char]10)------WebKitFormBoundarypRGxFImBBBq6c7CR$([char]13)$([char]10)Content-Disposition: form-data; name=`"search|annoSearchBox|includeRoles`"$([char]13)$([char]10)$([char]13)$([char]10)false$([char]13)$([char]10)------WebKitFormBoundarypRGxFImBBBq6c7CR$([char]13)$([char]10)Content-Disposition: form-data; name=`"search|annoSearchBox|storyboard`"$([char]13)$([char]10)$([char]13)$([char]10)false$([char]13)$([char]10)------WebKitFormBoundarypRGxFImBBBq6c7CR$([char]13)$([char]10)Content-Disposition: form-data; name=`"search|annoSearchBox|peopleOnly`"$([char]13)$([char]10)$([char]13)$([char]10)false$([char]13)$([char]10)------WebKitFormBoundarypRGxFImBBBq6c7CR$([char]13)$([char]10)Content-Disposition: form-data; name=`"search|annoSearchBox|allowClientGroups`"$([char]13)$([char]10)$([char]13)$([char]10)false$([char]13)$([char]10)------WebKitFormBoundarypRGxFImBBBq6c7CR$([char]13)$([char]10)Content-Disposition: form-data; name=`"search|annoSearchBox|showInactiveWithEmailUsers`"$([char]13)$([char]10)$([char]13)$([char]10)false$([char]13)$([char]10)------WebKitFormBoundarypRGxFImBBBq6c7CR$([char]13)$([char]10)Content-Disposition: form-data; name=`"search|annoSearchBox|showInactiveUsers`"$([char]13)$([char]10)$([char]13)$([char]10)false$([char]13)$([char]10)------WebKitFormBoundarypRGxFImBBBq6c7CR$([char]13)$([char]10)Content-Disposition: form-data; name=`"xlsOption|KEEPFORMATTING`"$([char]13)$([char]10)$([char]13)$([char]10)false$([char]13)$([char]10)------WebKitFormBoundarypRGxFImBBBq6c7CR$([char]13)$([char]10)Content-Disposition: form-data; name=`"xlsOption|AUTOSIZECOLSROWS`"$([char]13)$([char]10)$([char]13)$([char]10)true$([char]13)$([char]10)------WebKitFormBoundarypRGxFImBBBq6c7CR$([char]13)$([char]10)Content-Disposition: form-data; name=`"xlsOption|TABBEDCODISPLAY`"$([char]13)$([char]10)$([char]13)$([char]10)false$([char]13)$([char]10)------WebKitFormBoundarypRGxFImBBBq6c7CR$([char]13)$([char]10)Content-Disposition: form-data; name=`"xlsOption|WRAPTEXT`"$([char]13)$([char]10)$([char]13)$([char]10)false$([char]13)$([char]10)------WebKitFormBoundarypRGxFImBBBq6c7CR$([char]13)$([char]10)Content-Disposition: form-data; name=`"xlsOption|WRAPLENGTH`"$([char]13)$([char]10)$([char]13)$([char]10)100$([char]13)$([char]10)------WebKitFormBoundarypRGxFImBBBq6c7CR$([char]13)$([char]10)Content-Disposition: form-data; name=`"exportReportKey`"$([char]13)$([char]10)$([char]13)$([char]10)6150064$([char]13)$([char]10)------WebKitFormBoundarypRGxFImBBBq6c7CR$([char]13)$([char]10)Content-Disposition: form-data; name=`"tab_token`"$([char]13)$([char]10)$([char]13)$([char]10)b3733f89-7b02-48b9-9b89-5051dbffc313$([char]13)$([char]10)------WebKitFormBoundarypRGxFImBBBq6c7CR--$([char]13)$([char]10)"))
