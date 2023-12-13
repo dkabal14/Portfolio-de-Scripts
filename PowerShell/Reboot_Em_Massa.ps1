@@ -11,7 +11,7 @@ if ((Test-Path "$pasta\$arquivo") -ne $true)
             New-Item -Path $pasta -Name $arquivo
             Restart-Computer -Force
         }
-        Sleep -Seconds 5
+        Start-Sleep -Seconds 5
     }
     while ((Test-Path -Path C:\Windows\CCM\Reboot_SmartOffice.log) -eq $false)
 }
