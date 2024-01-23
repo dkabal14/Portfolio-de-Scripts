@@ -1,4 +1,4 @@
-'Escrito por Diego Rosário Sousa
+'Escrito por Diego Rosï¿½rio Sousa
 'E-mail: diegorosariosousa@gmail.com
 'Control+C Logger
 
@@ -6,25 +6,25 @@
 On Error Resume Next
 
 Dim objFSO 'Guarda o objeto do FileSystem.Object
-Dim objTexto 'Guarda o método "CreateTextFile" de FileSystem.Object
-Dim varLoop 'Variável imutável que permite o Looping infinito do script
-Dim strADT 'Se utiliza do objHTML para armazenar o texto da área de transferência
-Dim strADTAntiga 'Guarda o último texto da área de transferência para comparação
-Dim objHTML 'Captura o texto da área de transferênca
-Dim numErro 'Guarda o número do erro atual para que ele não mude durante o tratamento
+Dim objTexto 'Guarda o mï¿½todo "CreateTextFile" de FileSystem.Object
+Dim varLoop 'Variï¿½vel imutï¿½vel que permite o Looping infinito do script
+Dim strADT 'Se utiliza do objHTML para armazenar o texto da ï¿½rea de transferï¿½ncia
+Dim strADTAntiga 'Guarda o ï¿½ltimo texto da ï¿½rea de transferï¿½ncia para comparaï¿½ï¿½o
+Dim objHTML 'Captura o texto da ï¿½rea de transferï¿½nca
+Dim numErro 'Guarda o nï¿½mero do erro atual para que ele nï¿½o mude durante o tratamento
 Dim currTime 'Hora atual
 Dim currDate 'Data atual
-Dim Random 'Guarda um número aleatório que será utilizado em fileName para dar nome ao arquivo de log
+Dim Random 'Guarda um nï¿½mero aleatï¿½rio que serï¿½ utilizado em fileName para dar nome ao arquivo de log
 Dim fileName 'Guarda o nome do arquivo de log
-Dim objWMI 'Ainda não utilizado
-Dim colProcesses 'Ainda não utilizado
-Dim adtRodando 'Ainda não utilizado
+Dim objWMI 'Ainda nï¿½o utilizado
+Dim colProcesses 'Ainda nï¿½o utilizado
+Dim adtRodando 'Ainda nï¿½o utilizado
 
 'Set objWMI = GetObject("winmgmts:\\.\root\cimv2")
 'Set colHandles = objWMI.InstancesOf("Win32_Process")
 'For Each objHandle In colHandles
 '	If Not InStr(0, objHandle.CommandLine, "ADT.vbs", 0) = 0 Then
-'		MsgBox "O ADT.vbs já está rodando!", vbOKOnly + vbInformation, "ADT"
+'		MsgBox "O ADT.vbs jï¿½ estï¿½ rodando!", vbOKOnly + vbInformation, "ADT"
 '		WScript.Quit
 '	End If
 'Next
@@ -56,7 +56,7 @@ Do Until varLoop = "Nunca Sair"
 				WScript.Sleep 1000
 			Else
 				objTexto.WriteLine "=================" & Date & " - " & Time & "=================" & vbCrLf & vbCrLf & strADT
-				'WScript.Echo  "=================" & Date & " - " & Time & "=================" & vbCrLf & vbCrLf & strADT
+				Wscript.Echo  "=================" & Date & " - " & Time & "=================" & vbCrLf & vbCrLf & strADT
 				strADTAntiga = strADT
 				numErro = Empty
 			End If
