@@ -26,7 +26,7 @@ i = 0
 Do While i = 0
     Set objLatestProcess = colMonitoredProcesses.NextEvent
     WScript.Echo "====================================================" & vbCrLf
-    Wscript.Echo Now & " - " & objLatestProcess.TargetInstance.CommandLine & vbCrLf
+    Wscript.Echo Now & " - " & Name & " - " & Caption & " - " & objLatestProcess.TargetInstance.CommandLine & vbCrLf
     objTexto.WriteLine "====================================================" & vbCrLf
     objTexto.WriteLine Now & " - " & objLatestProcess.TargetInstance.CommandLine & vbCrLf
 Loop
